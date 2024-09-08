@@ -80,6 +80,7 @@ class Plan extends Model implements Sortable
         'description',
         'is_active',
         'price',
+        'syr_price',
         'signup_fee',
         'currency',
         'trial_period',
@@ -92,6 +93,7 @@ class Plan extends Model implements Sortable
         'prorate_period',
         'prorate_extend_due',
         'active_subscribers_limit',
+        'is_most_popular',
         'sort_order',
     ];
 
@@ -99,6 +101,7 @@ class Plan extends Model implements Sortable
         'slug' => 'string',
         'is_active' => 'boolean',
         'price' => 'float',
+        'syr_price' => 'float',
         'signup_fee' => 'float',
         'currency' => 'string',
         'trial_period' => 'integer',
@@ -112,6 +115,7 @@ class Plan extends Model implements Sortable
         'prorate_extend_due' => 'integer',
         'active_subscribers_limit' => 'integer',
         'sort_order' => 'integer',
+        'is_most_popular' => 'boolean',
         'deleted_at' => 'datetime',
     ];
 
@@ -138,7 +142,7 @@ class Plan extends Model implements Sortable
     {
         parent::boot();
 
-        static::deleted(function ($plan): void {
+        static::deleted(function (Plan $plan): void {
             $plan->features()->delete();
             $plan->subscriptions()->delete();
         });
