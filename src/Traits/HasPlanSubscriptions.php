@@ -64,6 +64,15 @@ trait HasPlanSubscriptions
         return $subscription && $subscription->active();
     }
 
+    public function subscribedToAny($planIds): bool
+    {
+        $subscription = $this->planSubscriptions()
+            ->whereIn('plan_id', $planIds)
+            ->first();
+
+        return $subscription && $subscription->active();
+    }
+    
     public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
     {
         $trial = new Period(
